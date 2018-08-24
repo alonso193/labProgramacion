@@ -9,8 +9,8 @@ bool verificarIngreso(string);
 double calculoDiscriminante(double, double, double);
 void solucionesCuadraticas(double, double, double);
 
-ofstream archivoSalida("salida.txt");
-ifstream archivoEntrada("entrada.txt");
+fstream archivoSalida("salida.txt", fstream::out);
+fstream archivoEntrada("entrada.txt");
 
 double a;
 double b;
@@ -24,29 +24,31 @@ int main(int argc, char* argv[])
     string temporal;
     int contador = 0;
     while (!archivoEntrada.eof()) {
-        getline(archivoEntrada, entrada);
+        getline(archivoEntrada, entrada, '\0');
         for (int i = 0; i < entrada.length(); i++) {
             temporal = entrada[i];
-            if (entrada[i] != ',' && entrada[i]!='\n') {
-                variable.append(temporal);
+            if (temporal == "," || temporal == "\n") {
+                if (verificarString(variable) && contador == 0) {
+                    a = stod(variable);
+                    contador++;
+                }
+                else if (verificarString(variable) && contador == 1) {
+                    b = stod(variable);
+                    contador++;
+                }
+                else if ((verificarString(variable) && contador == 2)) {
+                    c = stod(variable);
+                    contador = 0;
+                    solucionesCuadraticas(a,b,c);
+                }
+                variable = "";
             }
             else{
-                break;
+                variable.append(temporal);
             }
         }
-        if (contador == 0) {
-            a = stod(variable);
-        }
-        if (contador == 1) {
-            b = stod(variable);
-        }
-        if (contador == 2) {
-            c = stod(variable);
-        }
-        contador++;
     }
-
-    solucionesCuadraticas(a,b,c);
+    archivoSalida.close();
     return 0;
 }
 
@@ -55,7 +57,7 @@ void solucionesCuadraticas(double a, double b, double c) {
     if (discriminante >= 0){
         double x1 = (-b + sqrt(discriminante))/(2*a);
         double x2 = (-b - sqrt(discriminante))/(2*a);
-        cout << "(" << x1 << "," << x2 << ")" << endl;
+        archivoSalida << "(" << x1 << "," << x2 << ")" << endl;
     }
     else{
         double x1a = (-b)/(2*a);
@@ -106,28 +108,4 @@ bool verificarString(string repeticiones){
         }
     }
     return true;
-}
-
-bool verificarIngreso(string entrada){
-    if ((entrada == "s") || (entrada == "S")) {
-        cout << "Hasta luego" << endl;
-        exit(0);
-    }
-    else{
-        if (verificarString(entrada) && contadorParametros == 0) {
-            a = stod(entrada);
-            return true;
-        }
-        else if (verificarString(entrada) && contadorParametros == 1) {
-            b = stod(entrada);
-            return true;
-        }
-        else if (verificarString(entrada) && contadorParametros == 2) {
-            c = stod(entrada);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 }
