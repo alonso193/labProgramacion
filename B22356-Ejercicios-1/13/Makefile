@@ -1,7 +1,7 @@
 COMPILER = g++
-SRC = ejercicio11.cpp
+SRC = ejercicio13.cpp
 FLAGS = -std=c++14 -o
-BIN = ejercicio11
+BIN = ejercicio13
 
 
 all:	build	run clean
