@@ -1,3 +1,7 @@
+/*
+imprime hola mundo el numero de veces que el usuario pida
+*/
+
 #include <iostream>
 using namespace std;
 

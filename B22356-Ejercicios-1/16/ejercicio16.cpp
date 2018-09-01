@@ -1,12 +1,30 @@
+/*
+este programa pone un menu de conversiones de base
+y convierte acorde a lo seleccionado el numero ingrasado a la base solicitada
+luego de haberlo verificado
+*/
 #include <iostream>
 #include <string>
 #include <math.h>
 using namespace std;
+
+//esta funcion se encarga de imprimir el menu
 void imprimirOpciones();
+
+//convierte de binario a decimal
 string b2d(string);
+
+//convierte de decimal a binario
 string d2b(string);
+
+//convierte de decimal a hexadecimal
 string d2h(string);
+
+//convierte de hexadecimal a decimal
 string h2d(string);
+//las conversiones restantes se calculan como una combinacion de las anteriores
+
+//estas funciones comprueban que los numeros ingresados concuerden con lo solicitado
 bool comprobarHexadecimal(string);
 bool comprobarBinario(string);
 bool comprobarDecimal(string);
@@ -14,12 +32,18 @@ bool comprobarDecimal(string);
 int main(int argc, char const *argv[]) {
     while (1) {
         string opcion;
+
+        //se imprime el menu
         imprimirOpciones();
         cin >> opcion;
         cout << "Opcion recibida: " << opcion << endl;
+
+        //si digito 7, se termina el programa
         if (opcion == "7") {
             exit(0);
         }
+
+        //luego se llama la funcion necesaria de acuerdo a lo ingresado
         else if(opcion == "1"){
             string binario;
             while (1) {
@@ -101,6 +125,8 @@ void imprimirOpciones() {
     cout << "7- Salir" << endl;
 }
 
+
+//se toma el algoritmo del ejercicio 15
 string b2d(string binario){
     string temporal;
     int decimal = 0;
@@ -112,6 +138,7 @@ string b2d(string binario){
 }
 
 bool comprobarBinario(string binario){
+    //se recorre digito a digito para comprobar que solo sean ceros o unos
     for (int i = 0; i < binario.length(); i++) {
         if (binario[i] != '1' && binario[i] != '0') {
             return false;
@@ -120,6 +147,8 @@ bool comprobarBinario(string binario){
     return true;
 }
 
+
+//se repite el algoritmo del ejercicio 14
 string d2b(string decimal){
     int divisor = 2;
     int modulo;
@@ -147,6 +176,7 @@ string d2b(string decimal){
 }
 
 bool comprobarDecimal(string decimal){
+    //se recorre digito a digito para comprobar valores validos
     for (int i = 0; i < decimal.length(); i++) {
         if (decimal[i] != '0' && decimal[i] != '1' && decimal[i] != '2' &&
             decimal[i] != '3' && decimal[i] != '4' && decimal[i] != '5' &&
@@ -157,6 +187,10 @@ bool comprobarDecimal(string decimal){
     return true;
 }
 
+//el algoritmo es el mismo que el de d2b, tomando en cuenta que ahora
+//se convierte a hexadecimal, por lo que se divide por 16
+//tambien se toman en cuenta los valores del 10 al 15 para sustituirlos por sus
+//letras correspondientes
 string d2h(string decimal){
     int divisor = 16;
     int modulo;
@@ -222,6 +256,11 @@ string d2h(string decimal){
     }
     return hexadecimal;
 }
+
+
+//este algoritmo es igual que el de b2d solo que antes se cambian
+//los valodes A-F por sus numeros correspondientes y el peso de cada digito
+//es de 16 a su potencia
 string h2d(string hexadecimal){
     int temporal;
     string stringTemporal;
@@ -255,6 +294,7 @@ string h2d(string hexadecimal){
 }
 
 bool comprobarHexadecimal(string hexadecimal){
+    //se recorre digito a digito para comprobar valores validos
     for (int i = 0; i < hexadecimal.length(); i++) {
         if (hexadecimal[i] != '0' && hexadecimal[i] != '1' && hexadecimal[i] != '2' &&
             hexadecimal[i] != '3' && hexadecimal[i] != '4' && hexadecimal[i] != '5' &&

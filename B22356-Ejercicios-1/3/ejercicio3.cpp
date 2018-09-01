@@ -1,7 +1,13 @@
+/*
+imprime hola mundo el numero de veces que el usuario pida y se verifica
+que el valor ingresado sea valido
+*/
+
 #include <iostream>
 #include <string>
 using namespace std;
 
+//esta funcion comprueba la validez del numero ingresado
 bool verificarString(string);
 
 int main(int argc, char* argv[])
@@ -22,6 +28,7 @@ int main(int argc, char* argv[])
 }
 
 bool verificarString(string repeticiones){
+    //se recorre caracter a caracter para comprobar que sean numeros 0-9
     for (int i = 0; i < repeticiones.length(); i++) {
         switch (repeticiones[i]) {
             case '1':

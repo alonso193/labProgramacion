@@ -2,7 +2,7 @@ COMPILER = g++
 SRC = ejercicio10.cpp
 FLAGS = -std=c++14 -o
 BIN = ejercicio10
-PARAMS = 1 -2 1
+PARAMS = 1.1 -2 1
 
 
 all:	build	run clean

@@ -3,9 +3,13 @@
 #include <string>
 using namespace std;
 
+//se encarga de verificar que lo ingresado sea un numero
 bool verificarString(string);
+//lleva el control de los parametros ingresados y control de salida
 bool verificarIngreso(string);
+//calculo del discriminante
 double calculoDiscriminante(double, double, double);
+//calcula soluciones de la ecuacion cuadratica
 void solucionesCuadraticas(double, double, double);
 
 double a;
@@ -15,34 +19,43 @@ int contadorParametros = 0;
 
 int main(int argc, char* argv[])
 {
-    string entrada;
-    cout << "Ingrese A, o \"S\" para salir: ";
-    cin >> entrada;
-    while (!verificarIngreso(entrada)) {
+    //el programa se ejecutara siempre que no se pida salir de el
+    while(1){
+        string entrada;
+
+        //se solicita cada uno de los parametros de la ecuacion
+        //y se verifica
         cout << "Ingrese A, o \"S\" para salir: ";
         cin >> entrada;
-    }
-    contadorParametros++;
-    cout << "Ingrese B, o \"S\" para salir: ";
-    cin >> entrada;
-    while (!verificarIngreso(entrada)) {
+        while (!verificarIngreso(entrada)) {
+            cout << "Ingrese A, o \"S\" para salir: ";
+            cin >> entrada;
+        }
+        contadorParametros++;
         cout << "Ingrese B, o \"S\" para salir: ";
         cin >> entrada;
-    }
-    contadorParametros++;
-    cout << "Ingrese C, o \"S\" para salir: ";
-    cin >> entrada;
-    while (!verificarIngreso(entrada)) {
+        while (!verificarIngreso(entrada)) {
+            cout << "Ingrese B, o \"S\" para salir: ";
+            cin >> entrada;
+        }
+        contadorParametros++;
         cout << "Ingrese C, o \"S\" para salir: ";
         cin >> entrada;
+        while (!verificarIngreso(entrada)) {
+            cout << "Ingrese C, o \"S\" para salir: ";
+            cin >> entrada;
+        }
+        // se calcula las soluciones cuadradicas y se reinicia el contador de parametros
+        solucionesCuadraticas(a,b,c);
+        contadorParametros = 0;
     }
-
-    solucionesCuadraticas(a,b,c);
     return 0;
 }
 
 void solucionesCuadraticas(double a, double b, double c) {
     double discriminante = calculoDiscriminante(a,b,c);
+    //si el discriminante es mayor o igua a cero, se calcula normalmente
+    //las soluciones con la formula dada
     if (discriminante >= 0){
         double x1 = (-b + sqrt(discriminante))/(2*a);
         double x2 = (-b - sqrt(discriminante))/(2*a);
@@ -62,6 +75,7 @@ double calculoDiscriminante(double a, double b, double c){
 }
 
 bool verificarString(string repeticiones){
+    int banderaPunto = 0;
     for (int i = 0; i < repeticiones.length(); i++) {
         if (i == 0 && repeticiones[i] == '.') {
             return false;
@@ -91,7 +105,16 @@ bool verificarString(string repeticiones){
             case '0':
                 break;
             case '.':
-                break;
+                //esta bandera indica si se ingresaron mas de un punto, lo cual no
+                //corresponde a un numero valido
+                if (banderaPunto != 0) {
+                    return false;
+                }
+                else{
+                    banderaPunto = 1;
+                    break;
+                }
+
             default:
                 return false;
         }
@@ -101,10 +124,12 @@ bool verificarString(string repeticiones){
 
 bool verificarIngreso(string entrada){
     if ((entrada == "s") || (entrada == "S")) {
+        //si se ingresa "s" se despide y termina el programa
         cout << "Hasta luego" << endl;
         exit(0);
     }
     else{
+        //aca se controla el parametro ingresado con el contador
         if (verificarString(entrada) && contadorParametros == 0) {
             a = stod(entrada);
             return true;
