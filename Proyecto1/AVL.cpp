@@ -4,40 +4,96 @@ AVL::AVL(){
     root = NULL;
 }
 
-AVL::~AVL(){}
+AVL::~AVL(){
+    delete root;
+}
 
-void AVL::avl_tree_insert(string name, unsigned int ID){
-    if (root == NULL) {
-        root = new Node(name, ID);
+Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
+    if (newNode == NULL) {
+        newNode = new Node(name, ID);
+        return newNode;
+    }
+    if (newNode->ID < ID) {
+        newNode->rightChild = avl_tree_insert(newNode->rightChild, name, ID);
+    }
+    else if (newNode->ID > ID) {
+        newNode->leftChild = avl_tree_insert(newNode->rightChild, name, ID);
     }
     else{
-        Node* newNode = new Node(name, ID);
-        avl_tree_search_position(newNode, root);
+        cout << "Maybe the ID it's incorrect" << endl;
+    }
+
+    newNode->height = max(avl_tree_height(newNode->leftChild),avl_tree_height(newNode->rightChild)) + 1;
+
+    if (newNode != NULL) {
+        k = avl_tree_height(newNode->rightChild) - avl_tree_height(newNode->leftChild);
+    }
+    else{
+        k = 0;
+    }
+
+    if (k < -1 && ID > newNode->leftChild->ID) {//left right rotate
+        newNode->leftChild = avl_tree_left_rotation(newNode->leftChild);
+        return avl_tree_righ_rotation(newNode);
+    }
+    else if (k > 1 && ID < newNode->rightChild->ID) {//right left totate
+        newNode->rightChild = avl_tree_righ_rotation(newNode->rightChild);
+        return avl_tree_left_rotation(newNode);
+    }
+    else if (k < -1 && ID < newNode->leftChild->ID) {//rigth rotate
+        return avl_tree_righ_rotation(newNode);
+    }
+    else if (k > 1 && ID > newNode->rightChild->ID) {//left rotate
+        cout << "caca" << endl;
+        return avl_tree_left_rotation(newNode);
+    }
+    return newNode;
+}
+
+Node* AVL::avl_tree_righ_rotation(Node* z){
+    Node* y = z->leftChild;
+    z->leftChild = y->rightChild;
+    y->rightChild = z;
+    z->height = max(avl_tree_height(z->leftChild), avl_tree_height(z->rightChild)) + 1;
+    y->height = max(avl_tree_height(y->leftChild), avl_tree_height(y->rightChild)) + 1;
+    return y;
+}
+
+Node* AVL::avl_tree_left_rotation(Node* z){
+    Node* y = z->rightChild;
+    z->rightChild = y->leftChild;
+    y->leftChild = z;
+    z->height = max(avl_tree_height(z->leftChild), avl_tree_height(z->rightChild)) + 1;
+    y->height = max(avl_tree_height(y->leftChild), avl_tree_height(y->rightChild)) + 1;
+    return y;
+}
+
+bool AVL::avl_tree_search(Node* root, unsigned int ID2Search){
+    if (root != NULL) {
+        if (root->ID == ID2Search) {
+            return true;
+        }
+        else{
+            if (root->ID < ID2Search) {
+                avl_tree_search(root->rightChild, ID2Search);
+            }
+            else if(root->ID > ID2Search) {
+                avl_tree_search(root->leftChild, ID2Search);
+            }
+        }
+    }
+    else{
+        return false;
     }
 }
 
-void AVL::avl_tree_search_position(Node* &newNode, Node* &oldNode){
-    if (newNode->ID > oldNode->ID) {
-        oldNode->height += 1;
-        if (oldNode->rigthSon == NULL) {
-            oldNode->rigthSon = newNode;
-            oldNode->rigthSon->father = oldNode;
-        }
-        else{
-            avl_tree_search_position(newNode, oldNode->rigthSon);
-        }
+int AVL::avl_tree_height(Node* node){
+    if (node != NULL) {
+        return node->height;
     }
-    if (newNode->ID < oldNode->ID) {
-        oldNode->height -= 1;
-        if (oldNode->leftSon == NULL) {
-            oldNode->leftSon = newNode;
-            oldNode->leftSon->father = oldNode;
-        }
-        else{
-            avl_tree_search_position(newNode, oldNode->leftSon);
-        }
+    else{
+        return 0;
     }
-
 }
 
 void AVL::avl_tree_delete(string nombre, unsigned int cedula){
@@ -49,8 +105,5 @@ void AVL::avl_tree_create(string archivo){
 }
 
 void AVL::avl_tree_display(){
-    root->printNode();
-    root->rigthSon->printNode();
-    root->leftSon->printNode();
-    root->rigthSon->rigthSon->printNode();
+
 }

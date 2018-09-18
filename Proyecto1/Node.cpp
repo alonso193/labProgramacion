@@ -5,9 +5,9 @@ Node::Node(){
 Node::Node(string name, unsigned int ID){
     this->name = name;
     this->ID = ID;
-    height = 0;
-    rigthSon = NULL;
-    leftSon = NULL;
+    height = 1;
+    rightChild = NULL;
+    leftChild = NULL;
     father = NULL;
 }
 void Node::printNode(){

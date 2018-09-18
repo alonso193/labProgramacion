@@ -1,16 +1,22 @@
 #include "AVL.hpp"
 int main(){
-    //Node* yo = new Node("jose",115250867);
-    //Node* tati = new Node("tati",115250666);
-    // yo->printNode();
-    // yo->rigthSon = tati;
-    // yo->rigthSon->printNode();
     AVL* palo = new AVL();
-    palo->avl_tree_insert("jose",3);
-    palo->avl_tree_insert("tati",5);
-    palo->avl_tree_insert("papi",1);
-    palo->avl_tree_insert("mami",16);
-    palo->avl_tree_insert("turo",25);
-    palo->avl_tree_display();
+    //Node* root = NULL;
+    palo->root = NULL;
+    palo->root = palo->avl_tree_insert(palo->root,"jose",10);
+    cout << palo->root->ID << " ";
+    cout << palo->root->name << endl;
+    palo->root = palo->avl_tree_insert(palo->root,"tati",9);
+    cout << palo->root->ID << " ";
+    cout << palo->root->name << endl;
+    palo->root = palo->avl_tree_insert(palo->root,"tati",7);
+    cout << palo->root->ID << " ";
+    cout << palo->root->name << endl;
+    if (palo->avl_tree_search(palo->root, 3)) {
+        cout << "mi guapa es muy guapa... viva la liga" << endl;
+    }
+    else{
+        cout << "entre" << endl;
+    }
     return 0;
 }

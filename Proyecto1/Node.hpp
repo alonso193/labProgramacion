@@ -9,7 +9,7 @@ public:
     string name;
     unsigned int ID;
     int height;
-    Node* leftSon;
-    Node* rigthSon;
+    Node* leftChild;
+    Node* rightChild;
     Node* father;
 };
