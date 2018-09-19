@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm>
+//#include <algorithm>
 #include "Node.hpp"
 
 class AVL{
@@ -11,7 +11,7 @@ public:
     Node* avl_tree_insert(Node*, string, unsigned int);//to insert a node to the tree
     bool avl_tree_search(Node*, unsigned int);
     int avl_tree_height(Node*);//to calculate the height of a specific node
-    void avl_tree_display();//to display the entire tree
+    void avl_tree_display(Node*);//to display the entire tree
     Node* avl_tree_righ_rotation(Node*);
     Node* avl_tree_left_rotation(Node*);
     Node* root;

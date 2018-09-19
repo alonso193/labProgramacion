@@ -4,7 +4,7 @@ BIN = ejecutable
 COMMANDS = clear
 FLAGS = -g -o
 
-all: build clear run clean
+all: build clear run
 
 clean:
 	rm $(BIN)

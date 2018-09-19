@@ -17,7 +17,7 @@ Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
         newNode->rightChild = avl_tree_insert(newNode->rightChild, name, ID);
     }
     else if (newNode->ID > ID) {
-        newNode->leftChild = avl_tree_insert(newNode->rightChild, name, ID);
+        newNode->leftChild = avl_tree_insert(newNode->leftChild, name, ID);
     }
     else{
         cout << "Maybe the ID it's incorrect" << endl;
@@ -26,25 +26,28 @@ Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
     newNode->height = max(avl_tree_height(newNode->leftChild),avl_tree_height(newNode->rightChild)) + 1;
 
     if (newNode != NULL) {
-        k = avl_tree_height(newNode->rightChild) - avl_tree_height(newNode->leftChild);
+        this->k = avl_tree_height(newNode->rightChild) - avl_tree_height(newNode->leftChild);
     }
     else{
-        k = 0;
+        this->k = 0;
     }
 
     if (k < -1 && ID > newNode->leftChild->ID) {//left right rotate
+        cout << "rotacion izquierda derecha" << endl;
         newNode->leftChild = avl_tree_left_rotation(newNode->leftChild);
         return avl_tree_righ_rotation(newNode);
     }
     else if (k > 1 && ID < newNode->rightChild->ID) {//right left totate
+        cout << "rotacion derecha izquierda" << endl;
         newNode->rightChild = avl_tree_righ_rotation(newNode->rightChild);
         return avl_tree_left_rotation(newNode);
     }
     else if (k < -1 && ID < newNode->leftChild->ID) {//rigth rotate
+        cout << "rotacion derecha" << endl;
         return avl_tree_righ_rotation(newNode);
     }
     else if (k > 1 && ID > newNode->rightChild->ID) {//left rotate
-        cout << "caca" << endl;
+        cout << "rotacion izquierda" << endl;
         return avl_tree_left_rotation(newNode);
     }
     return newNode;
@@ -104,6 +107,10 @@ void AVL::avl_tree_create(string archivo){
 
 }
 
-void AVL::avl_tree_display(){
-
+void AVL::avl_tree_display(Node* root){
+    if (root != NULL) {
+        cout << root->ID << endl;
+        avl_tree_display(root->leftChild);
+        avl_tree_display(root->rightChild);
+    }
 }
