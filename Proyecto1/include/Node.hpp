@@ -5,7 +5,6 @@ class Node{
 public:
     Node();
     Node(string, unsigned int);
-    void printNode();
     string name;
     unsigned int ID;
     int height;
