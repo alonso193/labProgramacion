@@ -23,8 +23,8 @@ according with the K balance factor
 */
 Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
     if (newNode == NULL) {
-        newNode = new Node(name, ID);
-        return newNode;
+        this->root = new Node(name, ID);
+        return this->root;
     }
     if (newNode->ID < ID) {
         newNode->rightChild = avl_tree_insert(newNode->rightChild, name, ID);
@@ -53,23 +53,24 @@ Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
     //childs ID will determine the appropriate rotation to aplicate
 
     if (k < -1 && ID > newNode->leftChild->ID) {//left right rotate
-        cout << "rotacion izquierda derecha" << endl;
         newNode->leftChild = avl_tree_left_rotation(newNode->leftChild);
-        return avl_tree_righ_rotation(newNode);
+        this->root = avl_tree_righ_rotation(newNode);
+        return this->root;
     }
     else if (k > 1 && ID < newNode->rightChild->ID) {//right left totate
-        cout << "rotacion derecha izquierda" << endl;
         newNode->rightChild = avl_tree_righ_rotation(newNode->rightChild);
-        return avl_tree_left_rotation(newNode);
+        this->root = avl_tree_left_rotation(newNode);
+        return this->root;
     }
     else if (k < -1 && ID < newNode->leftChild->ID) {//rigth rotate
-        cout << "rotacion derecha" << endl;
-        return avl_tree_righ_rotation(newNode);
+        this->root = avl_tree_righ_rotation(newNode);
+        return this->root;
     }
     else if (k > 1 && ID > newNode->rightChild->ID) {//left rotate
-        cout << "rotacion izquierda" << endl;
-        return avl_tree_left_rotation(newNode);
+        this->root = avl_tree_left_rotation(newNode);
+        return this->root;
     }
+    this->root = newNode;
     return newNode;
 }
 /*
@@ -163,16 +164,17 @@ void AVL::avl_tree_display(Node* root, int branch)
 {
     if (root != NULL) {
         avl_tree_display(root->rightChild, branch + 1);
-        cout << endl;
+        cout << endl << endl;
         if (root == this->root) {
             cout << "root->";
         }
         for (int i = 0; i < branch && root != this->root; i++) {
-            cout << "       ";
+            cout << "               ";
         }
         cout << root->ID;
+        cout << endl << endl;
         avl_tree_display(root->leftChild, branch + 1);
-        cout << endl;
+
     }
 }
 
@@ -195,9 +197,68 @@ int AVL::avl_tree_getSize(Node* root){
 void AVL::avl_tree_delete(string nombre, unsigned int cedula){
 }
 
-void AVL::avl_tree_create(string filename){
-    fstream archivoEntrada(filename);
-        while (!archivoEntrada.eof()) {
-            
+void AVL::avl_tree_create(char* filename){
+    // this->avl_tree_insert(this->root,"ipi",50);
+    // this->avl_tree_insert(this->root,"jose",21);
+    // this->avl_tree_insert(this->root,"asar",12);
+    // this->avl_tree_insert(this->root,"eres",94);
+    // this->avl_tree_insert(this->root,"asno",122);
+    // this->avl_tree_insert(this->root,"burro",10);
+    // this->avl_tree_insert(this->root,"iniringo",142);
+    // this->avl_tree_insert(this->root,"guarion",222);
+    // this->avl_tree_insert(this->root,"talallo",322);
+    // this->avl_tree_insert(this->root,"camacho",43);
+    // this->avl_tree_in    sert(this->root,"danilo",1112);
+    // this->avl_tree_insert(this->root,"arino",7);
+    // this->avl_tree_insert(this->root,"ucarina",431);
+    // this->avl_tree_insert(this->root, "paparapanga", 111202);
+    FILE* tempFile;
+    tempFile = fopen(filename, "r");
+    if (tempFile != NULL) {
+        fstream inputFile(filename);
+        string line;
+        string name = "";
+        string stringID = "";
+        string temporal;
+        while (!inputFile.eof()) {
+            getline(inputFile, line, '\n');
+            if (line != "\0") {
+                for (int i = 0; i < line.length(); i++) {
+                    temporal = line[i];
+                    if (temporal != ",") {
+                        name.append(temporal);
+                    }
+                    else{
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < line.length(); i++) {
+                    temporal = line[i];
+                    if (temporal == "0" || temporal == "1" || temporal == "2" ||
+                        temporal == "3" || temporal == "4" || temporal == "5" ||
+                        temporal == "6" || temporal == "7" || temporal == "8" || temporal == "9"){
+
+                        stringID.append(temporal);
+                    }
+                }
+
+                if (stringID.length() != 9) {
+                     cout << "The ID number for " << name << " it's incorrect" << endl;
+                }
+
+                unsigned int ID = stoi(stringID);
+                this->avl_tree_insert(this->root, "name", ID);
+                name = "";
+                stringID = "";
+                //avl_tree_insert(this->root, name, 3);
+            }
+
         }
+    }
+    else{
+        cout << "the file name it's incorrect" << endl;
+    }
+
+
 }
