@@ -60,3 +60,6 @@ Una estructura general de las carpetas y archivos presentes en este repositorio:
         Código fuente del programa de pruebas
         -mainTest.cpp
     6. README.md
+    7. reporteProyecto1.pdf
+        Incluye una discusión de los resultados obtenidos para los tiempos
+        de ejecución de la creación de los diferentes árboles
