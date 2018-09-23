@@ -40,6 +40,12 @@ also, has the auto-balance control of the tree using the rotation methods
 according with the K balance factor
 */
 Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
+    if (to_string(ID).length() != 9 || to_string(ID)[0] == 0) {
+        cout << "[ERROR]";
+        cout << " The ID number for " << name << " it's incorrect" << endl;
+        cout << name  << " could not be added to the tree" << endl << endl;
+        return newNode;
+    }
     if (newNode == NULL) {
         this->root = new Node(name, ID);
         return this->root;
@@ -51,7 +57,7 @@ Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
         newNode->leftChild = avl_tree_insert(newNode->leftChild, name, ID);
     }
     else{
-        cout << "Maybe the ID it's incorrect and could not be added to the tree" << endl;
+        cout << "The ID for " << name << " its repeated and could not be added to the tree" << endl << endl;
     }
 
     //in each iteration updates the height of each node
@@ -216,20 +222,7 @@ void AVL::avl_tree_delete(string nombre, unsigned int cedula){
 }
 
 void AVL::avl_tree_create(string filename){
-    // this->avl_tree_insert(this->root,"ipi",50);
-    // this->avl_tree_insert(this->root,"jose",21);
-    // this->avl_tree_insert(this->root,"asar",12);
-    // this->avl_tree_insert(this->root,"eres",94);
-    // this->avl_tree_insert(this->root,"asno",122);
-    // this->avl_tree_insert(this->root,"burro",10);
-    // this->avl_tree_insert(this->root,"iniringo",142);
-    // this->avl_tree_insert(this->root,"guarion",222);
-    // this->avl_tree_insert(this->root,"talallo",322);
-    // this->avl_tree_insert(this->root,"camacho",43);
-    // this->avl_tree_in    sert(this->root,"danilo",1112);
-    // this->avl_tree_insert(this->root,"arino",7);
-    // this->avl_tree_insert(this->root,"ucarina",431);
-    // this->avl_tree_insert(this->root, "paparapanga", 111202);
+
     FILE* tempFile;
     tempFile = fopen(filename.c_str(), "r");
     string inputFilename = string(filename);
@@ -262,14 +255,14 @@ void AVL::avl_tree_create(string filename){
                     }
                 }
 
-                if (stringID.length() != 9 || stringID[0] == 0) {
+                if (stringID.length() != 9 || stoi(stringID) < 100000000) {
                     cout << "[ERROR] In " << filename << " file" << endl;
                     cout << "The ID number for " << name << " it's incorrect" << endl;
                     cout << name  << " could not be added to the tree" << endl << endl;
                 }
                 else{
                     unsigned int ID = stoi(stringID);
-                    this->avl_tree_insert(this->root, "name", ID);
+                    this->avl_tree_insert(this->root, name, ID);
                 }
 
                 name = "";
@@ -280,7 +273,7 @@ void AVL::avl_tree_create(string filename){
         }
     }
     else{
-        cout << "the file name it's incorrect" << endl;
+        cout << "The file name it's incorrect and the tree can't be created" << endl;
     }
 
 

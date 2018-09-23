@@ -1,6 +1,6 @@
 COMPILER = g++
 SRC = ../src/main.cpp ../src/Node.cpp ../src/AVL.cpp
-SRC_TEST = ../src/main.cpp ../src/Node.cpp ../src/AVL.cpp
+SRC_TEST = ../test/mainTest.cpp ../src/Node.cpp ../src/AVL.cpp
 IDIR = -I../include/
 BIN = ejecutable
 BIN_TEST = ejecutableTest
@@ -20,6 +20,8 @@ build_unittest:
 run:
 	$(COMMANDS)
 	./$(BIN)
+	rm $(BIN)
 run_unittest:
 	$(COMMANDS)
 	./$(BIN_TEST)
+	rm $(BIN_TEST)

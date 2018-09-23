@@ -1,0 +1,15 @@
+In the ../misc/inputs/lista_10.txt the max ID is: 100000009
+In the ../misc/inputs/lista_10.txt the min ID is: 100000000
+
+In the ../misc/inputs/lista_100.txt the max ID is: 100000099
+In the ../misc/inputs/lista_100.txt the min ID is: 100000000
+
+In the ../misc/inputs/lista_1000.txt the max ID is: 100000999
+In the ../misc/inputs/lista_1000.txt the min ID is: 100000000
+
+In the ../misc/inputs/lista_5000.txt the max ID is: 100004999
+In the ../misc/inputs/lista_5000.txt the min ID is: 100000000
+
+In the ../misc/inputs/lista_10000.txt the max ID is: 100009999
+In the ../misc/inputs/lista_10000.txt the min ID is: 100000000
+
