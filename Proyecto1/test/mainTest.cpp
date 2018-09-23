@@ -3,12 +3,14 @@
 void printMenu();
 void createTree();
 
-AVL* palo = new AVL();
+AVL* palo = new AVL();//global tree used for all the tests
 
 int main() {
     int testSelect;
     printMenu();
     cin >> testSelect;
+
+    //here the program select which test to run
     if (testSelect == 1) {
         palo->avl_tree_create("../misc/inputs/lista_1_0.txt");
     }
@@ -49,6 +51,9 @@ int main() {
     return 0;
 }
 
+/*
+Function used to creade a 10 nodes tree
+*/
 void createTree(){
     palo->avl_tree_insert(palo->root,"Lochi Yu", 100000010);
     palo->avl_tree_insert(palo->root,"Teodoro Willink", 215250867);
@@ -62,6 +67,9 @@ void createTree(){
     palo->avl_tree_insert(palo->root,"Francisco Siles", 100000011);
 }
 
+/*
+Used to display the several options of the program
+*/
 void printMenu(){
     cout << "Here you can select across the different tests." << endl;
     cout << "Main menu:" << endl;

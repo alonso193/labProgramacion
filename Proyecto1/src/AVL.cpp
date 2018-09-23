@@ -209,8 +209,12 @@ int AVL::avl_tree_getMaxHeight(){
     return this->root->height;
 }
 
+
+/*
+return the number of nodes of the tree
+*/
 int AVL::avl_tree_getSize(Node* root){
-    if(root != NULL){
+    if(root != NULL){//count the nodes recursively
         nodeCounter += 1;
         avl_tree_getSize(root->rightChild);
         avl_tree_getSize(root->leftChild);
@@ -218,14 +222,16 @@ int AVL::avl_tree_getSize(Node* root){
     }
 }
 
-void AVL::avl_tree_delete(string nombre, unsigned int cedula){
-}
-
+/*
+Receives a file and reads its lines to acquire a name and a ID to call
+the insertion method
+*/
 void AVL::avl_tree_create(string filename){
 
     FILE* tempFile;
     tempFile = fopen(filename.c_str(), "r");
     string inputFilename = string(filename);
+    //this is to verificate that the file exist
     if (tempFile != NULL) {
         fstream inputFile(inputFilename);
         string line;
@@ -235,6 +241,8 @@ void AVL::avl_tree_create(string filename){
         while (!inputFile.eof()) {
             getline(inputFile, line, '\n');
             if (line != "\0") {
+
+                //sweps the line looking for a char to append at the name
                 for (int i = 0; i < line.length(); i++) {
                     temporal = line[i];
                     if (temporal != ",") {
@@ -244,7 +252,8 @@ void AVL::avl_tree_create(string filename){
                         break;
                     }
                 }
-
+                //once the name is complete, look for numbers
+                //to append the ID
                 for (int i = 0; i < line.length(); i++) {
                     temporal = line[i];
                     if (temporal == "0" || temporal == "1" || temporal == "2" ||
@@ -255,24 +264,24 @@ void AVL::avl_tree_create(string filename){
                     }
                 }
 
+                //here, detects posible mistakes in the ID
                 if (stringID.length() != 9 || stoi(stringID) < 100000000) {
                     cout << "[ERROR] In " << filename << " file" << endl;
                     cout << "The ID number for " << name << " it's incorrect" << endl;
                     cout << name  << " could not be added to the tree" << endl << endl;
                 }
-                else{
+                else{//if has no errors
                     unsigned int ID = stoi(stringID);
                     this->avl_tree_insert(this->root, name, ID);
                 }
 
                 name = "";
                 stringID = "";
-                //avl_tree_insert(this->root, name, 3);
             }
 
         }
     }
-    else{
+    else{//if the file doesn't exist
         cout << "The file name it's incorrect and the tree can't be created" << endl;
     }
 

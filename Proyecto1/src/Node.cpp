@@ -17,6 +17,9 @@ Node::Node(string name, unsigned int ID){
     leftChild = NULL;
 }
 
+/*
+Destructor method
+*/
 Node::~Node(){
     delete rightChild;
     delete leftChild;

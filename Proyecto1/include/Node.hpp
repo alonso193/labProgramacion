@@ -3,9 +3,9 @@ using namespace std;
 
 class Node{
 public:
-    Node();
-    Node(string, unsigned int);
-    ~Node();
+    Node();//constructor method
+    Node(string, unsigned int);//constructor method
+    ~Node();//destructor method
     string name;
     unsigned int ID;
     int height;
