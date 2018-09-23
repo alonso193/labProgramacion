@@ -7,13 +7,31 @@ Constructor method, used to initialize the respective attributes
 AVL::AVL(){
     root = NULL;
     nodeCounter = 0;
+    nodeArray = new Node*[10000];
 }
 
 /*
 Destructor method, used to avoid memory leakage
 */
 AVL::~AVL(){
-    delete root;
+    this->avl_tree_destroyer(this->root);
+}
+
+void AVL::avl_tree_destroyer(Node* root){
+    if (root->rightChild == NULL && root->leftChild == NULL) {
+        delete root;
+        root = NULL;
+    }
+    else if (root->leftChild == NULL) {
+        avl_tree_destroyer(root->rightChild);
+    }
+    else if (root->rightChild == NULL) {
+        avl_tree_destroyer(root->leftChild);
+    }
+    else{
+        avl_tree_destroyer(root->rightChild);
+        avl_tree_destroyer(root->leftChild);
+    }
 }
 
 /*
@@ -33,7 +51,7 @@ Node* AVL::avl_tree_insert(Node* newNode, string name, unsigned int ID){
         newNode->leftChild = avl_tree_insert(newNode->leftChild, name, ID);
     }
     else{
-        cout << "Maybe the ID it's incorrect" << endl;
+        cout << "Maybe the ID it's incorrect and could not be added to the tree" << endl;
     }
 
     //in each iteration updates the height of each node
@@ -197,7 +215,7 @@ int AVL::avl_tree_getSize(Node* root){
 void AVL::avl_tree_delete(string nombre, unsigned int cedula){
 }
 
-void AVL::avl_tree_create(char* filename){
+void AVL::avl_tree_create(string filename){
     // this->avl_tree_insert(this->root,"ipi",50);
     // this->avl_tree_insert(this->root,"jose",21);
     // this->avl_tree_insert(this->root,"asar",12);
@@ -213,9 +231,10 @@ void AVL::avl_tree_create(char* filename){
     // this->avl_tree_insert(this->root,"ucarina",431);
     // this->avl_tree_insert(this->root, "paparapanga", 111202);
     FILE* tempFile;
-    tempFile = fopen(filename, "r");
+    tempFile = fopen(filename.c_str(), "r");
+    string inputFilename = string(filename);
     if (tempFile != NULL) {
-        fstream inputFile(filename);
+        fstream inputFile(inputFilename);
         string line;
         string name = "";
         string stringID = "";
@@ -243,12 +262,16 @@ void AVL::avl_tree_create(char* filename){
                     }
                 }
 
-                if (stringID.length() != 9) {
-                     cout << "The ID number for " << name << " it's incorrect" << endl;
+                if (stringID.length() != 9 || stringID[0] == 0) {
+                    cout << "[ERROR] In " << filename << " file" << endl;
+                    cout << "The ID number for " << name << " it's incorrect" << endl;
+                    cout << name  << " could not be added to the tree" << endl << endl;
+                }
+                else{
+                    unsigned int ID = stoi(stringID);
+                    this->avl_tree_insert(this->root, "name", ID);
                 }
 
-                unsigned int ID = stoi(stringID);
-                this->avl_tree_insert(this->root, "name", ID);
                 name = "";
                 stringID = "";
                 //avl_tree_insert(this->root, name, 3);

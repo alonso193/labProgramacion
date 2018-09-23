@@ -15,5 +15,9 @@ Node::Node(string name, unsigned int ID){
     height = 1;
     rightChild = NULL;
     leftChild = NULL;
-    father = NULL;
+}
+
+Node::~Node(){
+    delete rightChild;
+    delete leftChild;
 }
