@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/menu_principal"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
@@ -26,9 +26,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/main_menu"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            android:id="@+id/main_menu_text" />
 
         <Button
+            android:id="@+id/botonPlay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -42,78 +44,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/high_scores"
-            android:textSize="35sp" />
+            android:textSize="35sp"
+            android:id="@+id/botonHighScores" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="368dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-
-        <ImageButton
-            android:id="@+id/acordeon"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/acordeon_button"  />
-
-        <ImageButton
-            android:id="@+id/guitarra"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/guitarra_button"  />
-
-        <ImageButton
-            android:id="@+id/violin"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/violin_button"  />
-
-        <ImageButton
-            android:id="@+id/piano"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/piano_button"  />
-
-        <ImageButton
-            android:id="@+id/redoblante"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/redoblante_button"  />
-
-        <ImageButton
-            android:id="@+id/trompeta"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/trompeta_button"  />
-    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
