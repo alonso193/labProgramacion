@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.botonPlay:
-                Intent intent = new Intent(v.getContext(), botonera.class);
+                Intent intent = new Intent(v.getContext(), botonInicio.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.botonHighScores:

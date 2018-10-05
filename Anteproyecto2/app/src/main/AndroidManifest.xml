@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".botonera"></activity>
+        <activity android:name=".botonera" />
+        <activity android:name=".botonInicio" />
+        <activity android:name=".secuencias"></activity>
     </application>
 
 </manifest>
