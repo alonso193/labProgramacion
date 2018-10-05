@@ -13,12 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
 
 public class secuencias extends AppCompatActivity {
     ImageView botonViolin, botonPiano, botonRedoblante, botonGuitarra, botonAcordeon, botonTrompeta;
-    int contador;
+    int contador = 0;
+    int control = 0;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -47,218 +49,204 @@ public class secuencias extends AppCompatActivity {
         botonPiano = (ImageView) findViewById(R.id.piano);
         botonRedoblante = (ImageView) findViewById(R.id.redoblante);
         botonTrompeta = (ImageView) findViewById(R.id.trompeta);
-        int i = 0;
-        while(i < numSecuencias){
+        for(int i = 0; i < numSecuencias; i++) {
             final int numeroAleatorio = (int) (Math.random() * 6) + 1;
-            switch (numeroAleatorio){
-                case 1:
-                    botonAcordeon.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler1 = new Handler();
-                    handler1.postDelayed(new Runnable() {
+            final Handler handler = new Handler();
+            if (numeroAleatorio == 1) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            acordeonSound.start();
+                            acciones(acordeonSound, parametro, numeroAleatorio);
                         }
-                    }, 10);
-                    final Handler handler2 = new Handler();
-                    handler2.postDelayed(new Runnable() {
+                    }, 1);
+                }
+            } else if (numeroAleatorio == 2) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            botonAcordeon.setImageResource(R.drawable.acordeon);
+                            acciones(violinSound, parametro, numeroAleatorio);
                         }
-                    }, 2000);
-                    break;
-                case 2:
-                    botonViolin.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler3 = new Handler();
-                    handler3.postDelayed(new Runnable() {
+                    }, 1);
+                }
+            } else if (numeroAleatorio == 3) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            violinSound.start();
+                            acciones(guitarSound, parametro, numeroAleatorio);
                         }
-                    }, 10);
-                    final Handler handler4 = new Handler();
-                    handler4.postDelayed(new Runnable() {
+                    }, 1);
+                }
+            } else if (numeroAleatorio == 4) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            botonViolin.setImageResource(R.drawable.violin);
+                            acciones(pianoSound, parametro, numeroAleatorio);
                         }
-                    }, 2000);
-                    break;
-                case 3:
-                    botonGuitarra.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler5 = new Handler();
-                    handler5.postDelayed(new Runnable() {
+                    }, 1);
+                }
+            } else if (numeroAleatorio == 5) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            guitarSound.start();
+                            acciones(redoblanteSound, parametro, numeroAleatorio);
                         }
-                    }, 10);
-                    final Handler handler6 = new Handler();
-                    handler6.postDelayed(new Runnable() {
+                    }, 1);
+                }
+            } else if (numeroAleatorio == 6) {
+                for (int j = 1; j < 4; j++) {
+                    final int parametro = i;
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            botonGuitarra.setImageResource(R.drawable.guitarra);
+                            acciones(trompetaSound, parametro, numeroAleatorio);
                         }
-                    }, 2000);
-                    break;
-                case 4:
-                    botonPiano.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler7 = new Handler();
-                    handler7.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            pianoSound.start();
-                        }
-                    }, 10);
-                    final Handler handler8 = new Handler();
-                    handler8.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            botonPiano.setImageResource(R.drawable.piano);
-                        }
-                    }, 2000);
-                    break;
-                case 5:
-                    botonRedoblante.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler9 = new Handler();
-                    handler9.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            redoblanteSound.start();
-                        }
-                    }, 10);
-                    final Handler handler10 = new Handler();
-                    handler10.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            botonRedoblante.setImageResource(R.drawable.redoblante);
-                        }
-                    }, 2000);
-                    break;
-                case 6:
-                    botonTrompeta.setImageResource(R.drawable.cuadro_negro);
-                    final Handler handler11 = new Handler();
-                    handler11.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            trompetaSound.start();
-                        }
-                    }, 10);
-                    final Handler handler12 = new Handler();
-                    handler12.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            botonTrompeta.setImageResource(R.drawable.trompeta);
-                        }
-                    }, 2000);
-                    break;
-                default:
-                    break;
+                    }, 1);
+                }
             }
+        }
+
+
+
+//            final Handler handler1 = new Handler();
 //            if (numeroAleatorio == 1){
 //                botonAcordeon.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler1 = new Handler();
+//                //acordeonSound.start();
 //                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        acordeonSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler2 = new Handler();
-//                handler2.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonAcordeon.setImageResource(R.drawable.acordeon);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
 //            else if (numeroAleatorio == 2){
 //                botonViolin.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler3 = new Handler();
-//                handler3.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        violinSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler4 = new Handler();
-//                handler4.postDelayed(new Runnable() {
+//                //violinSound.start();
+//                handler1.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonViolin.setImageResource(R.drawable.violin);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
 //            else if (numeroAleatorio == 3){
 //                botonGuitarra.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler5 = new Handler();
-//                handler5.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        guitarSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler6 = new Handler();
-//                handler6.postDelayed(new Runnable() {
+//                //guitarSound.start();
+//                handler1.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonGuitarra.setImageResource(R.drawable.guitarra);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
 //            else if (numeroAleatorio == 4){
 //                botonPiano.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler7 = new Handler();
-//                handler7.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pianoSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler8 = new Handler();
-//                handler8.postDelayed(new Runnable() {
+//                //pianoSound.start();
+//                handler1.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonPiano.setImageResource(R.drawable.piano);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
 //            else if (numeroAleatorio == 5){
 //                botonRedoblante.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler9 = new Handler();
-//                handler9.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        redoblanteSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler10 = new Handler();
-//                handler10.postDelayed(new Runnable() {
+//                //redoblanteSound.start();
+//                handler1.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonRedoblante.setImageResource(R.drawable.redoblante);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
 //            else if (numeroAleatorio == 6){
 //                botonTrompeta.setImageResource(R.drawable.cuadro_negro);
-//                final Handler handler11 = new Handler();
-//                handler11.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        trompetaSound.start();
-//                    }
-//                }, 10);
-//                final Handler handler12 = new Handler();
-//                handler12.postDelayed(new Runnable() {
+//                //trompetaSound.start();
+//                handler1.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
 //                        botonTrompeta.setImageResource(R.drawable.trompeta);
 //                    }
-//                }, 2000);
+//                }, 3000);
+//
 //            }
-            i++;
+
+    }
+
+    private void acciones(MediaPlayer sonido, int j, int numeroAleatorio) {
+        if(contador == 1){
+            if (control == 1){
+                botonAcordeon.setImageResource(R.drawable.cuadro_negro);
+            }
+            else if (control == 2){
+                botonViolin.setImageResource(R.drawable.cuadro_negro);
+            }
+            else if (control == 3){
+                botonGuitarra.setImageResource(R.drawable.cuadro_negro);
+            }
+            else if (control == 4){
+                botonPiano.setImageResource(R.drawable.cuadro_negro);
+            }
+            else if (control == 5){
+                botonRedoblante.setImageResource(R.drawable.cuadro_negro);
+            }
+            else if (control == 6){
+                botonTrompeta.setImageResource(R.drawable.cuadro_negro);
+            }
+        }
+        else if (contador == 2){
+            if (control == 1){
+                sonido.start();
+            }
+            else if (control == 2){
+                sonido.start();
+            }
+            else if (control == 3){
+                sonido.start();
+            }
+            else if (control == 4){
+                sonido.start();
+            }
+            else if (control == 5){
+                sonido.start();
+            }
+            else if (control == 6){
+                sonido.start();
+            }
+        }
+        else if (contador == 3){
+            if (control == 1){
+                botonAcordeon.setImageResource(R.drawable.acordeon);
+            }
+            else if (control == 2){
+                botonViolin.setImageResource(R.drawable.violin);
+            }
+            else if (control == 3){
+                botonGuitarra.setImageResource(R.drawable.guitarra);
+            }
+            else if (control == 4){
+                botonPiano.setImageResource(R.drawable.piano);
+            }
+            else if (control == 5){
+                botonRedoblante.setImageResource(R.drawable.redoblante);
+            }
+            else if (control == 6){
+                botonTrompeta.setImageResource(R.drawable.trompeta);
+            }
         }
     }
 }
