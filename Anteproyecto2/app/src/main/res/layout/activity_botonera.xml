@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/acordeon"  />
+            android:background="@drawable/acordeon_button"  />
 
         <ImageButton
             android:id="@+id/guitarra"
@@ -37,7 +37,7 @@
             android:layout_alignParentTop="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/guitarra"  />
+            android:background="@drawable/guitarra_button"  />
 
         <ImageButton
             android:id="@+id/violin"
@@ -46,7 +46,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/violin"  />
+            android:background="@drawable/violin_button"  />
 
         <ImageButton
             android:id="@+id/piano"
@@ -55,7 +55,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/piano"  />
+            android:background="@drawable/piano_button"  />
 
         <ImageButton
             android:id="@+id/redoblante"
@@ -64,7 +64,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/redoblante"  />
+            android:background="@drawable/redoblante_button"  />
 
         <ImageButton
             android:id="@+id/trompeta"
@@ -73,7 +73,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/trompeta"  />
+            android:background="@drawable/trompeta_button"  />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

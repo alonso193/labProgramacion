@@ -16,12 +16,13 @@ import java.lang.Thread;
 public class botonera extends AppCompatActivity {
     ImageButton botonViolin, botonPiano, botonRedoblante, botonGuitarra, botonAcordeon, botonTrompeta;
     MediaPlayer acordeonSound, violinSound, guitarSound, pianoSound, redoblanteSound, trompetaSound;
-    int control = 0;
-    int numeroSecuencias;
-    int[] secuenciaMostrada;
-    int[] secuenciaRecibida;
+    int numeroSecuencias = 1;
+    int secuenciasIngresadas = 0;
+    int puntaje = 0;
+    String secuenciaMostrada = "";
+    String secuenciaRecibida = "";
 
-    final short tiempoInstrumento = 3000;
+    final short tiempoInstrumento = 3050;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,76 +43,148 @@ public class botonera extends AppCompatActivity {
         botonRedoblante = (ImageButton) findViewById(R.id.redoblante);
         botonTrompeta = (ImageButton) findViewById(R.id.trompeta);
 
-        numeroSecuencias = 3;
 
-
-        habilitarBotones(false);
-        llamadoSecuencias(numeroSecuencias);
-
-
+        controlFlujo();
 
         botonAcordeon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 acordeonSound.start();
+                secuenciaRecibida += "1";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
         botonViolin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 violinSound.start();
+                secuenciaRecibida += "2";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
         botonGuitarra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 guitarSound.start();
+                secuenciaRecibida += "3";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
         botonPiano.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pianoSound.start();
+                secuenciaRecibida += "4";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
         botonRedoblante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redoblanteSound.start();
+                secuenciaRecibida += "5";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
         botonTrompeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 trompetaSound.start();
+                secuenciaRecibida += "6";
+                secuenciasIngresadas++;
+                if (secuenciasIngresadas == numeroSecuencias){
+                    habilitarBotones(false);
+                    compararSecuencias();
+                }
             }
         });
     }
 
-    public void llamadoSecuencias(int numeroSecuencias){
-        int numeroAleatorio = 1;
-        Handler handler = new Handler();
+    public void controlFlujo(){
+        habilitarBotones(false);
+        llamadoSecuencias(numeroSecuencias);
+    }
 
+    public void compararSecuencias(){
+        boolean decision = true;
+        Handler handler = new Handler();
+        System.out.println("secuenciaMostrada: "+secuenciaMostrada);
+        System.out.println("secuenciaRecibida: "+secuenciaRecibida);
+        for (int i = 0; i < numeroSecuencias; i++){
+            if (secuenciaRecibida.charAt(i) != secuenciaMostrada.charAt(i)){
+                decision = false;
+            }
+        }
+        if (decision){
+            puntaje++;
+            numeroSecuencias++;
+            secuenciasIngresadas = 0;
+            secuenciaRecibida = "";
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    controlFlujo();
+                }
+            },3000);
+        }
+        else {
+            Intent intent = new Intent(this, pedirNombre.class);
+            intent.putExtra("puntaje", puntaje);
+            startActivityForResult(intent, 0);
+        }
+    }
+
+
+
+    public void llamadoSecuencias(final int numeroSecuencias){
+        habilitarBotones(false);
+        int numeroAleatorio = (int) (Math.random() * 6) + 1;
+        secuenciaMostrada += Integer.toString(numeroAleatorio);
+        Handler handler = new Handler();
         class InstalarSecuencia implements Runnable {
             int num;
-            public InstalarSecuencia(int n) {
+            int t;
+            public InstalarSecuencia(int n, int i) {
                 num = n;
+                t = i;
             }
 
             public void run() {
                 desplegarSecuencias(num);
+                if (t == numeroSecuencias - 1){
+                    habilitarBotones(true);
+                }
             }
         };
 
         for (int i = 0; i < numeroSecuencias; i++){
-            numeroAleatorio = (int) (Math.random() * 6) + 1;
-            final int finalNumeroAleatorio = numeroAleatorio;
-            handler.postDelayed(new InstalarSecuencia(finalNumeroAleatorio), tiempoInstrumento*i);
+            handler.postDelayed(new InstalarSecuencia(Integer.parseInt(Character.toString(secuenciaMostrada.charAt(i))), i),tiempoInstrumento*i);
         }
     }
 
     public void habilitarBotones(boolean habilitar){
         if (habilitar){
+            this.setTitle("Push the bottons...");
             botonAcordeon.setEnabled(true);
             botonViolin.setEnabled(true);
             botonGuitarra.setEnabled(true);
@@ -120,6 +193,7 @@ public class botonera extends AppCompatActivity {
             botonTrompeta.setEnabled(true);
         }
         else {
+            this.setTitle("See the sequence...");
             botonAcordeon.setEnabled(false);
             botonViolin.setEnabled(false);
             botonGuitarra.setEnabled(false);
@@ -137,10 +211,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonAcordeon.setImageResource(R.drawable.acordeon);
-                    control = 0;
+                    botonAcordeon.setImageResource(R.drawable.acordeon_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
         else if (numeroAleatorio == 2){
             botonViolin.setImageResource(R.drawable.cuadro_negro);
@@ -148,10 +221,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonViolin.setImageResource(R.drawable.violin);
-                    control = 0;
+                    botonViolin.setImageResource(R.drawable.violin_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
         else if (numeroAleatorio == 3){
             botonGuitarra.setImageResource(R.drawable.cuadro_negro);
@@ -159,10 +231,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonGuitarra.setImageResource(R.drawable.guitarra);
-                    control = 0;
+                    botonGuitarra.setImageResource(R.drawable.guitarra_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
         else if (numeroAleatorio == 4){
             botonPiano.setImageResource(R.drawable.cuadro_negro);
@@ -170,10 +241,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonPiano.setImageResource(R.drawable.piano);
-                    control = 0;
+                    botonPiano.setImageResource(R.drawable.piano_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
         else if (numeroAleatorio == 5){
             botonRedoblante.setImageResource(R.drawable.cuadro_negro);
@@ -181,10 +251,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonRedoblante.setImageResource(R.drawable.redoblante);
-                    control = 0;
+                    botonRedoblante.setImageResource(R.drawable.redoblante_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
         else if (numeroAleatorio == 6){
             botonTrompeta.setImageResource(R.drawable.cuadro_negro);
@@ -192,12 +261,9 @@ public class botonera extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    botonTrompeta.setImageResource(R.drawable.trompeta);
-                    control = 0;
+                    botonTrompeta.setImageResource(R.drawable.trompeta_button);
                 }
-            }, 3000);
+            }, tiempoInstrumento);
         }
     }
-
-
 }

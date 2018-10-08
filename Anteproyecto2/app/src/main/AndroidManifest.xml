@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".botonera" />
         <activity android:name=".botonInicio" />
-        <activity android:name=".secuencias"></activity>
+        <activity android:name=".secuencias" />
+        <activity android:name=".pedirNombre" />
+        <activity android:name=".mostrarHighScores"></activity>
     </application>
 
 </manifest>
