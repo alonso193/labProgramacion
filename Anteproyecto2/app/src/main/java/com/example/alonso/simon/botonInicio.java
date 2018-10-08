@@ -22,8 +22,7 @@ public class botonInicio extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonStart:
-                Intent intent = new Intent(v.getContext(), secuencias.class);
-                intent.putExtra("numSecuencias", 3);
+                Intent intent = new Intent(v.getContext(), botonera.class);
                 startActivityForResult(intent, 0);
                 break;
         }

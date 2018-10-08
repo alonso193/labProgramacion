@@ -29,224 +29,101 @@ public class secuencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secuencias);
 
+        final Intent intent = new Intent(this, botonera.class);
 
-        int numSecuencias = 0;
+        int numAleatorio = 0;
         Intent parametroRecibido = getIntent();
         Bundle bundle = parametroRecibido.getExtras();
-        if (bundle != null){
-            numSecuencias = (int) bundle.get("numSecuencias");
+        if (bundle != null) {
+            numAleatorio = (int) bundle.get("numAleatorio");
         }
-        int[] arregloSecuencias = new int[numSecuencias];
+
+        final MediaPlayer acordeonSound = MediaPlayer.create(this, R.raw.acordeon);
         final MediaPlayer violinSound = MediaPlayer.create(this, R.raw.violin);
         final MediaPlayer guitarSound = MediaPlayer.create(this, R.raw.guitarra);
+        final MediaPlayer pianoSound = MediaPlayer.create(this, R.raw.piano);
         final MediaPlayer redoblanteSound = MediaPlayer.create(this, R.raw.redoblante);
         final MediaPlayer trompetaSound = MediaPlayer.create(this, R.raw.trompeta);
-        final MediaPlayer acordeonSound = MediaPlayer.create(this, R.raw.acordeon);
-        final MediaPlayer pianoSound = MediaPlayer.create(this, R.raw.piano);
+
         botonAcordeon = (ImageView) findViewById(R.id.acordeon);
         botonViolin = (ImageView) findViewById(R.id.violin);
         botonGuitarra = (ImageView) findViewById(R.id.guitarra);
         botonPiano = (ImageView) findViewById(R.id.piano);
         botonRedoblante = (ImageView) findViewById(R.id.redoblante);
         botonTrompeta = (ImageView) findViewById(R.id.trompeta);
-        for(int i = 0; i < numSecuencias; i++) {
-            final int numeroAleatorio = (int) (Math.random() * 6) + 1;
-            final Handler handler = new Handler();
-            if (numeroAleatorio == 1) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(acordeonSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
+        Handler handler = new Handler();
+        if (numAleatorio == 1){
+            botonAcordeon.setImageResource(R.drawable.cuadro_negro);
+            acordeonSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonAcordeon.setImageResource(R.drawable.acordeon);
+                    intent.putExtra("instrumentoSonado", 1);
+                    startActivityForResult(intent, 0);
                 }
-            } else if (numeroAleatorio == 2) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(violinSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
-                }
-            } else if (numeroAleatorio == 3) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(guitarSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
-                }
-            } else if (numeroAleatorio == 4) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(pianoSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
-                }
-            } else if (numeroAleatorio == 5) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(redoblanteSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
-                }
-            } else if (numeroAleatorio == 6) {
-                for (int j = 1; j < 4; j++) {
-                    final int parametro = i;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            acciones(trompetaSound, parametro, numeroAleatorio);
-                        }
-                    }, 1);
-                }
-            }
+            }, 3000);
         }
-
-
-
-//            final Handler handler1 = new Handler();
-//            if (numeroAleatorio == 1){
-//                botonAcordeon.setImageResource(R.drawable.cuadro_negro);
-//                //acordeonSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonAcordeon.setImageResource(R.drawable.acordeon);
-//                    }
-//                }, 3000);
-//
-//            }
-//            else if (numeroAleatorio == 2){
-//                botonViolin.setImageResource(R.drawable.cuadro_negro);
-//                //violinSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonViolin.setImageResource(R.drawable.violin);
-//                    }
-//                }, 3000);
-//
-//            }
-//            else if (numeroAleatorio == 3){
-//                botonGuitarra.setImageResource(R.drawable.cuadro_negro);
-//                //guitarSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonGuitarra.setImageResource(R.drawable.guitarra);
-//                    }
-//                }, 3000);
-//
-//            }
-//            else if (numeroAleatorio == 4){
-//                botonPiano.setImageResource(R.drawable.cuadro_negro);
-//                //pianoSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonPiano.setImageResource(R.drawable.piano);
-//                    }
-//                }, 3000);
-//
-//            }
-//            else if (numeroAleatorio == 5){
-//                botonRedoblante.setImageResource(R.drawable.cuadro_negro);
-//                //redoblanteSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonRedoblante.setImageResource(R.drawable.redoblante);
-//                    }
-//                }, 3000);
-//
-//            }
-//            else if (numeroAleatorio == 6){
-//                botonTrompeta.setImageResource(R.drawable.cuadro_negro);
-//                //trompetaSound.start();
-//                handler1.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        botonTrompeta.setImageResource(R.drawable.trompeta);
-//                    }
-//                }, 3000);
-//
-//            }
-
-    }
-
-    private void acciones(MediaPlayer sonido, int j, int numeroAleatorio) {
-        if(contador == 1){
-            if (control == 1){
-                botonAcordeon.setImageResource(R.drawable.cuadro_negro);
-            }
-            else if (control == 2){
-                botonViolin.setImageResource(R.drawable.cuadro_negro);
-            }
-            else if (control == 3){
-                botonGuitarra.setImageResource(R.drawable.cuadro_negro);
-            }
-            else if (control == 4){
-                botonPiano.setImageResource(R.drawable.cuadro_negro);
-            }
-            else if (control == 5){
-                botonRedoblante.setImageResource(R.drawable.cuadro_negro);
-            }
-            else if (control == 6){
-                botonTrompeta.setImageResource(R.drawable.cuadro_negro);
-            }
+        else if (numAleatorio == 2){
+            botonViolin.setImageResource(R.drawable.cuadro_negro);
+            violinSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonViolin.setImageResource(R.drawable.violin);
+                    intent.putExtra("instrumentoSonado", 2);
+                    startActivityForResult(intent, 0);
+                }
+            }, 3000);
         }
-        else if (contador == 2){
-            if (control == 1){
-                sonido.start();
-            }
-            else if (control == 2){
-                sonido.start();
-            }
-            else if (control == 3){
-                sonido.start();
-            }
-            else if (control == 4){
-                sonido.start();
-            }
-            else if (control == 5){
-                sonido.start();
-            }
-            else if (control == 6){
-                sonido.start();
-            }
+        else if (numAleatorio == 3){
+            botonGuitarra.setImageResource(R.drawable.cuadro_negro);
+            guitarSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonGuitarra.setImageResource(R.drawable.guitarra);
+                    intent.putExtra("instrumentoSonado", 3);
+                    startActivityForResult(intent, 0);
+                }
+            }, 3000);
         }
-        else if (contador == 3){
-            if (control == 1){
-                botonAcordeon.setImageResource(R.drawable.acordeon);
-            }
-            else if (control == 2){
-                botonViolin.setImageResource(R.drawable.violin);
-            }
-            else if (control == 3){
-                botonGuitarra.setImageResource(R.drawable.guitarra);
-            }
-            else if (control == 4){
-                botonPiano.setImageResource(R.drawable.piano);
-            }
-            else if (control == 5){
-                botonRedoblante.setImageResource(R.drawable.redoblante);
-            }
-            else if (control == 6){
-                botonTrompeta.setImageResource(R.drawable.trompeta);
-            }
+        else if (numAleatorio == 4){
+            botonPiano.setImageResource(R.drawable.cuadro_negro);
+            pianoSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonPiano.setImageResource(R.drawable.piano);
+                    intent.putExtra("instrumentoSonado", 4);
+                    startActivityForResult(intent, 0);
+                }
+            }, 3000);
+        }
+        else if (numAleatorio == 5){
+            botonRedoblante.setImageResource(R.drawable.cuadro_negro);
+            redoblanteSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonRedoblante.setImageResource(R.drawable.redoblante);
+                    intent.putExtra("instrumentoSonado", 5);
+                    startActivityForResult(intent, 0);
+                }
+            }, 3000);
+        }
+        else if (numAleatorio == 6){
+            botonTrompeta.setImageResource(R.drawable.cuadro_negro);
+            trompetaSound.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    botonTrompeta.setImageResource(R.drawable.trompeta);
+                    intent.putExtra("instrumentoSonado", 5);
+                    startActivityForResult(intent, 0);
+                }
+            }, 3000);
         }
     }
 }
+
