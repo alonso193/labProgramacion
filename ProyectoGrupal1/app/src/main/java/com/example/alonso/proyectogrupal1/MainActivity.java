@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     double pi = 3.14159265359;
     float[] orientation = new float[3];
     int contador = 0;
+    int banderaPosicionInicial = 0;
+    int numeroAngulosPromedio = 10;
+
     public void onSensorChanged(SensorEvent event){
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             mGravity = event.values;
@@ -70,26 +73,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float[] I = new float[9];
             boolean succes = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
             if (succes){
-                float conversionGrados = (float) (180/pi);
                 SensorManager.getOrientation(R, orientation);
-                if (contador == 0){
-                    init_azimut = (int) (orientation[0] * conversionGrados);
-                    init_pitch = (int) (orientation[1] * conversionGrados);
-                    init_roll = (int) (orientation[2] * conversionGrados);
-                    contador++;
+                if (contador < numeroAngulosPromedio){
+                    azimut += (int) orientation[0];
+                    pitch += (int) orientation[1];
+                    roll += (int) orientation[2];
                 }
-                else{
-                    azimut = (int) (orientation[0] * conversionGrados);
-                    pitch = (int) (orientation[1] * conversionGrados);
-                    roll = (int) (orientation[2] * conversionGrados);
+                else if (contador == numeroAngulosPromedio ){
+                    azimut = azimut/numeroAngulosPromedio;
+                    pitch = pitch/numeroAngulosPromedio;
+                    roll = roll/numeroAngulosPromedio;
+                    contador = -1;
+                    String texto = Integer.toString(azimut);
+                    text.setText(texto);
+                    String texto1 = Integer.toString(pitch);
+                    text1.setText(texto1);
+                    String texto2 = Integer.toString(roll);
+                    text2.setText(texto2);
                 }
-                String texto = Integer.toString(azimut);
-                text.setText(texto);
-                String texto1 = Integer.toString(pitch);
-                text1.setText(texto1);
-                String texto2 = Integer.toString(roll);
-                text2.setText(texto2);
             }
+            contador++;
         }
     }
 }
